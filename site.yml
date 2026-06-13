@@ -1,0 +1,6 @@
+---
+- name: Setup app-server
+  hosts: app
+  become: yes
+  roles:
+    - docker
