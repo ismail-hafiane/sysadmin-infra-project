@@ -12,38 +12,7 @@ End-to-end automated infrastructure deployment on Azure using Infrastructure as 
 The entire stack is deployed with a single Ansible command — zero manual intervention.
 
 ## Architecture
-┌─────────────────────────────────┐     ┌─────────────────────────────────┐
-
-│        app-server (VM1)         │     │    monitoring-server (VM2)      │
-
-│        10.0.0.4                 │     │        10.0.0.5                 │
-
-│                                 │     │                                 │
-
-│  ┌─────────┐  ┌──────────────┐  │     │  ┌──────────┐  ┌────────────┐  │
-
-│  │  Nginx  │  │   Portainer  │  │     │  │  Zabbix  │  │  Zabbix    │  │
-
-│  │ :80     │  │   :9000      │  │     │  │  Server  │  │  Frontend  │  │
-
-│  └─────────┘  └──────────────┘  │     │  │  :10051  │  │  :8080     │  │
-
-│                                 │     │  └──────────┘  └────────────┘  │
-
-│  ┌───────────────────────────┐  │     │  ┌──────────────────────────┐  │
-
-│  │     Zabbix Agent 2        │◄─┼─────┼─►│       MySQL 8.0          │  │
-
-│  │     :10050                │  │     │  │       (Zabbix DB)        │  │
-
-│  └───────────────────────────┘  │     │  └──────────────────────────┘  │
-
-└─────────────────────────────────┘     └─────────────────────────────────┘
-
-Docker + Docker Compose                 Docker + Docker Compose
-
-Managed by Ansible                    Managed by Ansible
-
+![Architecture](docs/architecture.png)
 ## Tech Stack
 
 | Tool | Role | Version |
