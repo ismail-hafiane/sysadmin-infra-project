@@ -1,0 +1,32 @@
+---
+- name: Install Zabbix repository
+  shell: |
+    curl -fsSL https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest+ubuntu24.04_all.deb -o /tmp/zabbix-release.deb
+    dpkg -i /tmp/zabbix-release.deb
+  args:
+    creates: /etc/apt/sources.list.d/zabbix.list
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install zabbix-agent2 package
+  apt:
+    name: zabbix-agent2
+    state: present
+
+- name: Configure Zabbix Agent
+  lineinfile:
+    path: /etc/zabbix/zabbix_agent2.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^Server=', line: 'Server=10.0.0.5' }
+    - { regexp: '^ServerActive=', line: 'ServerActive=10.0.0.5' }
+    - { regexp: '^Hostname=', line: 'Hostname=app-server' }
+
+- name: Start and enable Zabbix Agent
+  systemd:
+    name: zabbix-agent2
+    state: restarted
+    enabled: yes

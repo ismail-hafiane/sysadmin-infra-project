@@ -5,6 +5,7 @@
   roles:
     - docker
     - app
+    - zabbix-agent
 
 - name: Setup monitoring-server
   hosts: monitoring
