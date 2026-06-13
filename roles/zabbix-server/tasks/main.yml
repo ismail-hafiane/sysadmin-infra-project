@@ -1,0 +1,16 @@
+---
+- name: Create zabbix directory
+  file:
+    path: /opt/zabbix
+    state: directory
+    owner: ismail
+    mode: '0755'
+
+- name: Copy docker-compose file
+  copy:
+    src: docker-compose.yml
+    dest: /opt/zabbix/docker-compose.yml
+    owner: ismail
+
+- name: Deploy Zabbix stack
+  shell: docker compose -f /opt/zabbix/docker-compose.yml up -d

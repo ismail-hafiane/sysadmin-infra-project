@@ -5,3 +5,10 @@
   roles:
     - docker
     - app
+
+- name: Setup monitoring-server
+  hosts: monitoring
+  become: yes
+  roles:
+    - docker
+    - zabbix-server
