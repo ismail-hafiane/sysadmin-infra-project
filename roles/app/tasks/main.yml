@@ -1,0 +1,17 @@
+---
+- name: Create app directory
+  file:
+    path: /opt/app
+    state: directory
+    owner: ismail
+    mode: '0755'
+
+- name: Copy docker-compose file
+  copy:
+    src: docker-compose.yml
+    dest: /opt/app/docker-compose.yml
+    owner: ismail
+
+- name: Deploy containers
+  shell: docker compose -f /opt/app/docker-compose.yml up -d
+  become_user: ismail
